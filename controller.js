@@ -1,7 +1,6 @@
 const model = require('./models/model');
 
 //  post: http://localhost:5000/api/categories
-// Assuming you have imported the necessary model and named it "model"
 async function create_Categories(req, res) {
     try {
       const Create = new model.Categories({
