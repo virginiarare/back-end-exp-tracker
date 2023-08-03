@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const model = require('./models/model');
 require('dotenv').config();
 
