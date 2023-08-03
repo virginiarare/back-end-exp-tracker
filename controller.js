@@ -1,4 +1,8 @@
 const model = require('./models/model');
+require('dotenv').config();
+
+const slackAccessToken = process.env.SLACK_ACCESS_TOKEN;
+const slackChannel = process.env.SLACK_CHANNEL;
 
 //  post: http://localhost:5000/api/categories
 async function create_Categories(req, res) {
@@ -44,6 +48,19 @@ async function create_Transaction(req, res) {
   
       // Save the document to the database using the save() method
       const savedTransaction = await create.save();
+
+      // Send Slack notification using the Slack API
+      const slackMessage = `New Transaction Alert!\nName: ${name}\nType: ${type}\nAmount: $${amount}`;
+
+      // Make an HTTP POST request to the Slack API
+      await fetch('https://slack.com/api/chat.postMessage', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${slackAccessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ channel: slackChannel, text: slackMessage }),
+      });
   
       // Respond to the client with the saved document
       res.json(savedTransaction);
