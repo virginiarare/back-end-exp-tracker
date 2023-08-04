@@ -9,8 +9,8 @@ const slackChannel = process.env.SLACK_CHANNEL;
 async function create_Categories(req, res) {
     try {
       const Create = new model.Categories({
-        type: "Income",
-        color: "#00A4CCFF",
+        type: "Expense",
+        color: "#EDFF00FF",
       });
   
       // Save the document to the database using the save() method
