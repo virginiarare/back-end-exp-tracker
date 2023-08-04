@@ -65,7 +65,6 @@ describe('Transaction API Tests', () => {
     expect(fetchedTransaction.type).toBe(newTransaction.type);
     expect(fetchedTransaction.amount).toBe(newTransaction.amount);
 
-    // You may add more specific assertions here if needed
   });
 });
 
