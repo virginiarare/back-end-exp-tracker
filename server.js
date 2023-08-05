@@ -19,12 +19,14 @@ con.then(db => {
     if(!db) return process.exit(1);
 
     // listen to the http server 
-    app.listen(port, () => {
-        console.log(`Server is running on port: http://localhost:${port}`)
-    })
+    // app.listen(port, () => {
+    //     console.log(`Server is running on port: http://localhost:${port}`)
+    // })
 
-    app.on('error', err => console.log(`Failed To Connect with HTTP Server : ${err}`));
+    // app.on('error', err => console.log(`Failed To Connect with HTTP Server : ${err}`));
     // error in mondb connection
 }).catch(error => {
     console.log(`Connection Failed...! ${error}`);
 });
+
+module.exports = app;

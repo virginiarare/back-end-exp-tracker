@@ -1,22 +1,21 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../server'); 
-const Transaction = require('../models/model');
+const app = require('../server');
+const { Transaction } = require('../models/model');
 
-
-// Load environment variables from .env file
 require('dotenv').config();
 
-// Test database URI from the environment variable
 const testDbUri = process.env.TEST_DB_URI;
 
-// Connect to the test database before running the tests
 beforeAll(async () => {
   try {
-    await mongoose.connect(testDbUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    
+    if (!mongoose.connection.readyState) {
+      await mongoose.connect(testDbUri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    }
     console.log('Connected to the test database!');
   } catch (error) {
     console.error('Error connecting to the test database:', error);
@@ -24,13 +23,12 @@ beforeAll(async () => {
   }
 });
 
-// Disconnect from the test database after running the tests
 afterAll(async () => {
   await mongoose.disconnect();
   console.log('Disconnected from the test database!');
 });
 
-describe('Transaction API Tests', () => {
+describe('Transaction Tests', () => {
   beforeEach(async () => {
     // Clear the test database collections before each test
     await Transaction.deleteMany({});
@@ -57,7 +55,7 @@ describe('Transaction API Tests', () => {
     
 
     // Fetch the created transaction from the database
-    const fetchedTransaction = await TransactionModel.findById(response.body._id);
+    const fetchedTransaction = await Transaction.findById(response.body._id);
 
     // Assert the fetched transaction
     expect(fetchedTransaction).not.toBeNull();
