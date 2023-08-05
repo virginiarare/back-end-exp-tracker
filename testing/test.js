@@ -9,13 +9,11 @@ const testDbUri = process.env.TEST_DB_URI;
 
 beforeAll(async () => {
   try {
-    
-    if (!mongoose.connection.readyState) {
-      await mongoose.connect(testDbUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-    }
+    // Connect to the test database directly
+    await mongoose.connect(testDbUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log('Connected to the test database!');
   } catch (error) {
     console.error('Error connecting to the test database:', error);
